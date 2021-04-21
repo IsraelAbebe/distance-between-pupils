@@ -6,6 +6,7 @@ import imutils
 import dlib
 import cv2
 import time
+from card_detect import get_card_width
 # construct the argument parser and parse the arguments
 
 ap = argparse.ArgumentParser()
@@ -77,7 +78,23 @@ for (i, rect) in enumerate(rects):
           (0,0,255), 1)
 
   pupil_distance = Pupil.distance(left_pupil, right_pupil)
-  cv2.putText(image, 'distance: {:.2f} px'.format(pupil_distance), (int(left_pupil.x), int(left_pupil.y - 5)),
+  card_coordinate = get_card_width(im) #[768.69446,2121.0703,1420.283,2538.185]
+  x = card_coordinate[2]-card_coordinate[0]
+  y = card_coordinate[3]-card_coordinate[1]
+
+  if x > y:
+    width = x
+  else:
+    width = y
+
+  # width = card_coordinate[2]
+
+  real_mesurement = (pupil_distance * 3.375)/width
+
+
+
+
+  cv2.putText(image, 'distance: {:.2f} inch'.format(real_mesurement), (int(left_pupil.x), int(left_pupil.y - 5)),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.3, (0, 255, 0), 1)
 
 # show the output image with the face detection + facial landmarks
