@@ -52,8 +52,9 @@ def get_card_width():
     from detectron2.utils.visualizer import ColorMode
     # dataset_dicts = get_balloon_dicts("balloon/val")
     # for d in random.sample(dataset_dicts, 3):    
-    im = cv2.imread("train/IMG_20210421_223649.jpg")
-    outputs = predictor(im)  # format is documented at https://detectron2.readthedocs.io/tutorials/models.html#model-output-format
-    return outputs["instances"].pred_boxes.tensor.cpu().numpy()[0]
+    im = cv2.imread("x.jpg")
+    outputs = predictor(im)
+    print(outputs)  # format is documented at https://detectron2.readthedocs.io/tutorials/models.html#model-output-format
+    return outputs["instances"].pred_boxes.tensor.cpu().numpy()[0].tolist()
 
-get_card_width()
+print(get_card_width())
