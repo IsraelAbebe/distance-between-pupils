@@ -57,4 +57,4 @@ def get_card_width():
     print(outputs)  # format is documented at https://detectron2.readthedocs.io/tutorials/models.html#model-output-format
     return outputs["instances"].pred_boxes.tensor.cpu().numpy()[0].tolist()
 
-print(get_card_width())
+# print(get_card_width())
