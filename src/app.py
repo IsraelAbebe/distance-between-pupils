@@ -30,7 +30,7 @@ def dict_mean(dict_list):
     return mean_dict
 
 class FaceMeasureInput(BaseModel):
-    image_file: List[FileContent] = Field(..., mime_type="image/png")
+    image_file: List[FileContent] = Field(..., mime_type="image/png/jpg/jpeg")
 
 class Output(BaseModel):
     message: dict
@@ -219,13 +219,19 @@ def face_measure(input: FaceMeasureInput,) -> Output:
     for i in input.image_file:
         try:
             image = Image.open(io.BytesIO(i.as_bytes()))
+            format = image.format
+            # if format=='PNG':
             image.save('tmp/tmp.png')
+            # if format == 'JPEG':
+            #     image.save('tmp/tmp.jpg')
             value = predict('tmp/tmp.png')
             result.append(value)
         except Exception as e:
             pass
 
-    output = dict_mean(result)#, 'per-image':result}
+    print(result)
+
+    #output = dict_mean(result)#, 'per-image':result}
 
 
 
